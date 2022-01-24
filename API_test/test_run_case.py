@@ -14,13 +14,16 @@ class Test_runCase():
     # @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/API_test_case/").read_case())
     @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/API_test_case/").read_case())
     def test_run(self,args):
-        print(os.getcwd())
-
-        # allure.dynamic.title('登录')
-        # allure.dynamic.description = ('描述')
+        # print(os.getcwd())
+        allure.dynamic.title(args['name'])
+        allure.dynamic.description = ('描述')
         # print(args)
 
-        time = args['time']
+        #获取请求次数
+        if args['time']:
+            time = args['time']
+        else:
+            time = 1
         # print(time)
         url = args['request']['host']+args['request']['path']
         # print(url)
@@ -41,7 +44,10 @@ class Test_runCase():
         print(args['validate']['eq'])
 
         #断言
-        assert str(args['validate']['eq']) in r.text
+        try:
+            assert str(args['validate']['eq']) in r.text
+        except:
+            pytest.fail("用例指执行失败")
 
 
 
