@@ -2,7 +2,7 @@
 -
   name: '获取验证码成功'
   #接口请求次数，不填默认一次
-  time:
+  times:
   request:
      host: https://api-dev.pixcakeai.com
      path: /v1/app/send_verify_code
@@ -10,8 +10,7 @@
      headers:
      data:
        phone: '18030359088'
-       phone_cc: '86'
-
+       phone_cc: 86
   validate:
      eq: '"code":0'
 
@@ -19,7 +18,7 @@
 #1.连续获取多次验证码
 -
   name: '连续获取多次验证码'
-  time: 10
+  times: 10
   request:
      host: https://api-dev.pixcakeai.com
      path: /v1/app/send_verify_code
@@ -27,9 +26,118 @@
      headers:
      data:
        phone: '18030359088'
-       phone_cc: '86'
+       phone_cc: 86
   validate:
      eq: '"code":77'
 
+#2.手机号码类型为数字num
+-
+  name: '手机号码类型为数字num'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: 18030359088
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
 
+#3.手机号码带有标点符号
+-
+  name: '手机号码带有标点符号'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: '180303590!@'
+       phone_cc: 86
+  validate:
+     eq: '"code":4'
 
+#4.不传手机号码字段
+-
+  name: '不传手机号码字段'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
+
+#5.手机号码为空字符串
+-
+  name: '手机号码为空字符串'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: ''
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
+
+#6.手机号码字段长度不足11位
+-
+  name: '手机号码字段长度不足11位'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: '1803035'
+       phone_cc: 86
+  validate:
+     eq: '"code":4'
+
+#7.手机号码长度超过11位
+-
+  name: '手机号码长度超过11位'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: '180303590881'
+       phone_cc: 86
+
+  validate:
+     eq: '"code":4'
+
+#8.手机号码超长字符串
+-
+  name: '手机号码超长字符串'
+  #接口请求次数，不填默认一次
+  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: "180303590881803035908818030359088" #超过数据库长度32位
+       phone_cc: 86
+  validate:
+     eq: '"code":4'

@@ -4,44 +4,41 @@ import json
 import os
 import allure
 from Basic.yaml_util import YamlUtil
+from Basic.request_info import Request_info
+
 
 
 
 @allure.feature('接口测试')
 class Test_runCase():
 
-    # @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/API_test_case/获取验证码.yaml").read_yaml())
+    @pytest.mark.parametrize('args',YamlUtil().read_yaml(os.getcwd()+"/../API_test_case/登录.yaml"))
+    # @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/../API_test_case/").read_case())
     # @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/API_test_case/").read_case())
-    @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/API_test_case/").read_case())
     def test_run(self,args):
         # print(os.getcwd())
         allure.dynamic.title(args['name'])
         allure.dynamic.description = ('描述')
         # print(args)
 
-        #获取请求次数
-        if args['time']:
-            time = args['time']
-        else:
-            time = 1
-        # print(time)
+        #数据整理
+        args = Request_info(args).sorting_data()
+
         url = args['request']['host']+args['request']['path']
         # print(url)
         headers= args['request']['headers']
         # print(headers)
         data = args['request']['data']
-        # print(params)
+        # print(data)
 
         #添加操作步骤
         with allure.step(args['name']):
-            for i in range(time):
+            for i in range(args['times']):
                 r = requests.post(url = url,data = data,headers = headers)
                 res = r.json()
                 print(res)
 
-
-
-        print(args['validate']['eq'])
+        # print(args['validate']['eq'])
 
         #断言
         try:
