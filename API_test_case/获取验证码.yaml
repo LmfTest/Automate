@@ -1,0 +1,34 @@
+#正常获取验证码
+-
+  name: '获取验证码成功'
+  time: 1
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: '18030359088'
+       phone_cc: '86'
+
+  validate:
+     eq: '"code":0'
+
+#异常获取验证码
+#1.连续获取多次验证码
+-
+  name: '连续获取多次验证码'
+  time: 10
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/app/send_verify_code
+     method: post
+     headers:
+     data:
+       phone: '18030359088'
+       phone_cc: '86'
+  validate:
+     eq: '"code":77'
+
+
+
