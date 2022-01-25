@@ -3,6 +3,7 @@
   name: '字符串号码登录成功'
   #接口请求次数，不填默认一次
   times:
+  apiVersion: 'v2'
   request:
      host: https://api-dev.pixcakeai.com
      path: /v1/pt/login
@@ -20,6 +21,7 @@
   name: '虚拟号登录成功'
   #接口请求次数，不填默认一次
   times:
+  apiVersion: 'v2'
   request:
      host: https://api-dev.pixcakeai.com
      path: /v1/pt/login
@@ -37,6 +39,7 @@
 -
   name: '验证码与账号不匹配'
   times:
+  apiVersion: 'v2'
   request:
      host: https://api-dev.pixcakeai.com
      path: /v1/pt/login

@@ -20,8 +20,9 @@ class Request_info:
 
         #验证码md5加密
         try:
-            if self.args['request']['data']['verify_code']:
-                self.args['request']['data']['verify_code'] = hashlib.md5(str(self.args['request']['data']['verify_code']).encode(encoding='UTF-8')).hexdigest()
+            if self.args['apiVersion'] == 'v2':
+                if self.args['request']['data']['verify_code']:
+                    self.args['request']['data']['verify_code'] = hashlib.md5(str(self.args['request']['data']['verify_code']).encode(encoding='UTF-8')).hexdigest()
         except Exception as e:
             print(e)
 
