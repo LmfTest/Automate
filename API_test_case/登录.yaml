@@ -46,9 +46,157 @@
      method: post
      headers:
      data:
-       phone: 'v3182301802'
+       phone: '18030359088'
        verify_code: '60108089'
        phone_cc: 86
   validate:
      eq: '"code":53'
 
+##2.验证码错误太多次
+#-
+#  name: '验证码错误太多次'
+#  times: 30
+#  apiVersion: 'v2'
+#  request:
+#     host: https://api-dev.pixcakeai.com
+#     path: /v1/pt/login
+#     method: post
+#     headers:
+#     data:
+#       phone: '18030359088'
+#       verify_code: '60108089'
+#       phone_cc: 86
+#  validate:
+#     eq: '"code":57'
+
+#3.不传手机号码
+-
+  name: '不传手机号码'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       verify_code: '60108089'
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
+
+#4.手机号码为空字符串
+-
+  name: '手机号码为空字符串'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone: ''
+       verify_code: '60108089'
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
+
+#5.手机号码长度为32位(纯数字)
+-
+  name: '手机号码长度为32位(纯数字)'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone: '180303590881803035908821803035908'
+       verify_code: '60108089'
+       phone_cc: 86
+  validate:
+     eq: '"code":48'
+
+#6.手机号码长度为33位(纯数字)
+-
+  name: '手机号码长度为33位(纯数字)'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone: '1803035908818030359088218030359088'
+       verify_code: '60108089'
+       phone_cc: 86
+  validate:
+     eq: '"code":48'
+
+#7.手机号码长度为33位(纯数字)
+-
+  name: '手机号码长度为33位(字符串)'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone: 'v180303590881803035908821803035988'
+       verify_code: '60108089'
+       phone_cc: 86
+  validate:
+     eq: '"code":75'
+
+#8.不传验证码
+-
+  name: '不传验证码'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone: '18030359088'
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
+
+#9.验证码为空字符串
+-
+  name: '验证码为空字符串'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone: '18030359088'
+       verify_code: ''
+       phone_cc: 86
+  validate:
+     eq: '"code":1'
+
+#10.手机号码和验证码都为空
+-
+  name: '手机号码和验证码都为空'
+  times:
+  apiVersion: 'v2'
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/login
+     method: post
+     headers:
+     data:
+       phone_cc: 86
+  validate:
+     eq: '"code":1'

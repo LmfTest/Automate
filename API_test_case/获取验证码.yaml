@@ -30,21 +30,21 @@
   validate:
      eq: '"code":77'
 
-#2.手机号码类型为数字num
--
-  name: '手机号码类型为数字num'
-  #接口请求次数，不填默认一次
-  times:
-  request:
-     host: https://api-dev.pixcakeai.com
-     path: /v1/app/send_verify_code
-     method: post
-     headers:
-     data:
-       phone: 18030359088
-       phone_cc: 86
-  validate:
-     eq: '"code":1'
+##2.手机号码类型为数字num
+#-
+#  name: '手机号码类型为数字num'
+#  #接口请求次数，不填默认一次
+#  times:
+#  request:
+#     host: https://api-dev.pixcakeai.com
+#     path: /v1/app/send_verify_code
+#     method: post
+#     headers:
+#     data:
+#       phone: 18030359088
+#       phone_cc: 86
+#  validate:
+#     eq: '"code":1'
 
 #3.手机号码带有标点符号
 -
