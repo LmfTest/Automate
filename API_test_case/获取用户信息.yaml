@@ -1,0 +1,15 @@
+#正常获取用户信息
+-
+  name: '获取用户成功'
+  #接口请求次数，不填默认一次
+#  times:
+  request:
+     host: https://api-dev.pixcakeai.com
+     path: /v1/pt/api/user/info
+     method: get
+     headers:
+       Authorization: ''
+     data:
+  validate:
+     eq: '"code":0'
+

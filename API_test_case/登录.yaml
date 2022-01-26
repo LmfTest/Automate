@@ -50,7 +50,7 @@
        verify_code: '60108089'
        phone_cc: 86
   validate:
-     eq: '"code":53'
+     eq: '"code":6'
 
 ##2.验证码错误太多次
 #-
