@@ -8,8 +8,58 @@
      path: /v1/pt/api/user/info
      method: get
      headers:
-       Authorization: ''
+       Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjowLCJlbnYiOiJkZXYiLCJleHAiOjE2NDU2MDEwMzgsIm9wZW5pZCI6IiIsInBob25lIjoidjMxODIzMDE4MDIiLCJzZXNzaW9uX2tleSI6IiIsInRva2VuX3R5cGUiOjUsInVzZXJfaWQiOjgyNX0.RNog12dTCqH-c4SYGpTkh_v-DL8dq1mPxbbIDh_c0Jg'
      data:
   validate:
      eq: '"code":0'
+
+#获取用户信息失败
+##1.不传token
+#-
+#  name: '不传token'
+#  #接口请求次数，不填默认一次
+##  times:
+#  request:
+#     host: https://api-dev.pixcakeai.com
+#     path: /v1/pt/api/user/info
+#     method: get
+#     headers:
+#       Authorization:
+#     data:
+#  validate:
+#     eq: '"code":0'
+
+##2.token传空字符串
+#-
+#  name: 'token传空字符串'
+#  #接口请求次数，不填默认一次
+##  times:
+#  request:
+#     host: https://api-dev.pixcakeai.com
+#     path: /v1/pt/api/user/info
+#     method: get
+#     headers:
+#       Authorization: ''
+#     data:
+#  validate:
+#     eq: '"code":0'
+
+##3.token错误
+#-
+#  name: 'token错误'
+#  #接口请求次数，不填默认一次
+##  times:
+#  request:
+#     host: https://api-dev.pixcakeai.com
+#     path: /v1/pt/api/user/info
+#     method: get
+#     headers:
+#       Authorization: '1212'
+#     data:
+#  validate:
+#     eq: '"code":0'
+
+
+
+
 

@@ -1,6 +1,6 @@
 import os
 import hashlib
-
+import json
 import requests
 
 
@@ -8,12 +8,27 @@ class Automate_request:
 
     def __init__(self,*args):
         self.args = args[0]
+        # self.args = dict(self.args)
 
     #提取基本信息
-    def request_bassInfo(self):
+    def request_baseInfo(self):
+
         self.url = self.args['request']['host'] + self.args['request']['path']
         # print(url)
-        self.headers = self.args['request']['headers']
+
+        #判空给空字典
+        try:
+            if type(self.args['request']['headers']) == dict:
+                self.headers = self.args['request']['headers']
+            else:
+                self.args['request']['headers'] = {}
+        except:
+            self.args['request']['headers'] = {}
+        finally:
+            self.headers = self.args['request']['headers']
+
+        # print("self.headers:"+str(self.headers))
+
         # print(headers)
         self.data = self.args['request']['data']
         # print(data)
@@ -42,7 +57,7 @@ class Automate_request:
 
         #token为空时，设定默认token
         try:
-            if not len(self.args['request']['headers']['Authorization']):
+            if not self.args['request']['headers']['Authorization']:
                 self.args['request']['headers']['Authorization'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjowLCJlbnYiOiJkZXYiLCJleHAiOjE2NDU2MDEwMzgsIm9wZW5pZCI6IiIsInBob25lIjoidjMxODIzMDE4MDIiLCJzZXNzaW9uX2tleSI6IiIsInRva2VuX3R5cGUiOjUsInVzZXJfaWQiOjgyNX0.RNog12dTCqH-c4SYGpTkh_v-DL8dq1mPxbbIDh_c0Jg"
         except Exception as e:
             default_authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjowLCJlbnYiOiJkZXYiLCJleHAiOjE2NDU2MDEwMzgsIm9wZW5pZCI6IiIsInBob25lIjoidjMxODIzMDE4MDIiLCJzZXNzaW9uX2tleSI6IiIsInRva2VuX3R5cGUiOjUsInVzZXJfaWQiOjgyNX0.RNog12dTCqH-c4SYGpTkh_v-DL8dq1mPxbbIDh_c0Jg"
@@ -53,14 +68,16 @@ class Automate_request:
                     }
                 }
             }
-            # self.args['request']['headers'].update({Authorization default_authorization})
-            self.args.update(a)
+            # self.args.update(a)
+            self.args['request']['headers']['Authorization'] = default_authorization
         return self.args
 
     #发送请求
     def request_run(self):
-        self.request_bassInfo()
+
+        self.request_baseInfo()
         self.sorting_data()
+
         if self.method.upper() == "POST":
             for i in range(self.args['times']):
                 res = requests.post(url = self.url,data = self.data,headers = self.headers)
