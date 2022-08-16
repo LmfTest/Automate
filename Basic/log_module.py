@@ -88,7 +88,8 @@ if __name__ == "__main__":
     # print(log_info['log'])
     log = Logger(log_info['log'])
     # log.log("正常信息")
-    log.logger.info('111')
-
+    # log.logger.info('111')
+    # log.log('1111')
+    log.info('222')
 
 

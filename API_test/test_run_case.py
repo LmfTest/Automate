@@ -15,14 +15,15 @@ from Basic.get_path import *
 @allure.feature('接口测试')
 class Test_runCase():
 
-    # @pytest.mark.parametrize('args',YamlUtil().read_yaml(os.path.join(case_dir, "testcase.yaml")))
+    @pytest.mark.parametrize('args',YamlUtil().read_yaml(os.path.join(case_dir, "testcase.yaml")))
     # @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/../API_test_case/").read_case())
-    @pytest.mark.parametrize('args',YamlUtil(case_dir).read_case())
+    # @pytest.mark.parametrize('args',YamlUtil(case_dir).read_case())
 
     def test_run(self,args,setup_and_down):
 
         allure.dynamic.title(args['name'])
         allure.dynamic.description = ('描述')
+
         #用例状态,默认失败
         #case_status = 0
         #添加日志

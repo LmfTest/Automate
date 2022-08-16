@@ -6,11 +6,12 @@ from Basic.log_module import *
 global_data = {}
 test_args = {}
 @pytest.fixture(scope = "function")
-def setup_and_down(args):
+def setup_and_down(args,get_test_data):
     """
     前置函数
     """
     case_name = args['name']
+    args['request']['host'] = get_test_data['host']
     # 读取日志配置
     log_info = YamlUtil().read_yaml(config_path)
     # print(log_info['log'])
@@ -20,7 +21,7 @@ def setup_and_down(args):
     log.logger.info(f"接口路径: {args['request']['path']}")
     log.logger.info(f"用例名称: {args['name']}")
     log.logger.info(f"接口地址: {args['request']['host']}{args['request']['path']}")
-    log.logger.info(f"请求头: {args['request']['headers']}")
+    log.logger.info(f"请求头(headers): {args['request']['headers']}")
     log.logger.info(f"请求入参: {args['request']['data']}")
     log.teardown()
     yield
@@ -77,4 +78,33 @@ def get_global_data():
         return global_data.get(key)
 
     return _get_global_data
+
+#环境配置
+def pytest_addoption(parser):
+    """注册自定义参数 env 到配置对象"""
+    parser.addoption(
+        "--env",
+        dest = "env",
+        action="store",
+        default="dev",
+        help="配置环境变量：dev 测试环境 pro 正式环境 pre预发布环境"
+    )
+
+#获取环境配置
+@pytest.fixture(scope= "session")
+def get_env(request):
+    """从配置对象中读取自定义参数的值"""
+    return request.config.getoption('env')
+
+#设置环境
+@pytest.fixture(scope= "session")
+def get_test_data(get_env):
+    #读取所有的环境配置
+    temp_data = YamlUtil().read_yaml(test_data_path)
+    try:
+        test_date = temp_data[get_env]
+    except:
+        print('环境配置错误')
+
+    return test_date
 

@@ -11,6 +11,7 @@ report_dir = os.path.join(project_path, "report")
 
 # 日志路径
 log_dir = os.path.join(project_path, 'log')
+
 ##判断日志文件夹不存在就新建一个日志文件夹
 def get_logDir(log_dir):
     if os.path.exists(log_dir):
@@ -19,8 +20,11 @@ def get_logDir(log_dir):
         os.mkdir(log_dir)
         return log_dir
 
-log_file = os.path.join(get_logDir(log_dir), '%s.log'%time.strftime('%Y-%m-%d %H-%M-%S'))  # 日志路径
-# 配置文件路径
+log_file = os.path.join(get_logDir(log_dir), '%s.log'%time.strftime('%Y-%m-%d_%H-%M-%S'))  # 日志路径
 
+
+# 配置文件路径
 config_dir = os.path.join(project_path,'config')
 config_path = os.path.join(config_dir,'config.yaml')
+
+test_data_path = os.path.join(config_dir,'test_data.yaml')
