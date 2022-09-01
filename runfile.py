@@ -1,10 +1,16 @@
 import pytest
 import os
+import sys
 from Basic.get_path import *
 
 if __name__ == '__main__':
+    try:
+        sys_args = sys.argv[1]
+        if sys_args:
+            env = sys_args
+    except:
+        env = 'dev'
 
-    env = "dev"
     # pytest.main(['-vs'])
     # pytest.main(['-vs','-n 2','--reruns=2' ,'ios_testcase/test_login.py','ios_testcase/test_createOrder.py'])
     # pytest.main(['-v@pytest.mark.run(order = 1)s','-n 2','ios_testcase/test_login.py','ios_testcase/test_createOrder.py'])
