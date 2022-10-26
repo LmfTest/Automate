@@ -2,6 +2,7 @@
 # conftest.py
 import pytest
 from Basic.log_module import *
+import decorator
 # 定义一个全局变量，用于存储内容
 global_data = {}
 test_args = {}
@@ -30,7 +31,7 @@ def setup_and_down(args,get_test_data):
     """
     log = Logger(log_info['log'])
     log.logger.info(f'<{case_name}>用例执行结束')
-    log.logger.info("")
+    log.logger.info("####################")
     log.teardown()
 
 
@@ -108,3 +109,15 @@ def get_test_data(get_env):
 
     return test_date
 
+def log1(file):
+    print(file)
+    def inner(func):
+        def infunc(*args):
+            print("执行log函数开始")
+            print(args)
+            args = args[1:]
+            print(args)
+            func(*args)
+            print("执行log函数结束")
+        return decorator.decorator(infunc,func)
+    return inner

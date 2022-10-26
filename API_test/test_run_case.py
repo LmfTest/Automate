@@ -7,8 +7,7 @@ from Basic.yaml_util import YamlUtil
 from Basic.automate_request import Automate_request
 from Basic.log_module import Logger
 from Basic.get_path import *
-
-
+from conftest import *
 
 
 
@@ -18,9 +17,11 @@ class Test_runCase():
     @pytest.mark.parametrize('args',YamlUtil().read_yaml(os.path.join(case_dir, "testcase.yaml")))
     # @pytest.mark.parametrize('args',YamlUtil(os.getcwd()+"/../API_test_case/").read_case())
     # @pytest.mark.parametrize('args',YamlUtil(case_dir).read_case())
-
+    @log1(config_path)
     def test_run(self,args,setup_and_down):
 
+        print(args)
+        print(3333333)
         allure.dynamic.title(args['name'])
         allure.dynamic.description = ('描述')
 
