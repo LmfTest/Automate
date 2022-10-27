@@ -5,7 +5,7 @@ from Basic.get_path import *
 import argparse
 if __name__ == '__main__':
     # 设置执行环境dev为测试，pro为正式，pre为预发布
-    # 之后只需要在运行run_interface.py文件时增加一个参数(python run_interface.py --env=pro),修改env参数就可以切换对应环境
+    # 之后只需要在运行run_interface.py文件时增加一个参数(python runfile.py --env=pro),修改env参数就可以切换对应环境
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--env",
